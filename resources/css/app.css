@@ -1,3 +1,462 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Logo Styling */
+.c-logo {
+    max-height: 68px;
+    height: auto;
+    width: auto;
+}
+
+@media (max-width: 1023px) {
+    .c-logo {
+        max-height: 50px;
+    }
+}
+
+/* Menu Outer Container */
+.c-menu-outer {
+    background-color: #F6F2E7;
+    border-bottom: 1px solid #EAE7DB;
+}
+
+/* Menu Component */
+.c-menu {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: center;
+}
+
+.c-menu a {
+    padding: 14px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.c-menu a:hover {
+    color: #037A84;
+}
+
+.c-menu a.font-semibold {
+    color: #037A84;
+}
+
+@media (min-width: 1024px) {
+    .c-menu a {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .c-menu a {
+        padding: 14px 20px;
+    }
+}
+
+/* Menu Dropdown Styles */
+.c-menu__item {
+    position: relative;
+}
+
+.c-menu__item--dropdown {
+    position: relative;
+}
+
+.c-menu__item--dropdown > a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.c-menu__dropdown-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    transition: transform 0.2s ease;
+}
+
+.c-menu__item--dropdown:hover .c-menu__dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.c-menu__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #EAE7DB;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 1000;
+}
+
+.c-menu__item--dropdown:hover .c-menu__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.c-menu__dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Roboto Condensed', sans-serif;
+    border-bottom: 1px solid #F6F2E7;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.c-menu__dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.c-menu__dropdown-item:hover {
+    background-color: #F6F2E7;
+    color: #037A84;
+}
+
+.c-menu__dropdown-item.active {
+    background-color: #037A84;
+    color: white;
+}
+
+.c-menu__dropdown-divider {
+    height: 1px;
+    background-color: #EAE7DB;
+    margin: 4px 0;
+}
+
+.c-menu__divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background-color: #EAE7DB;
+    margin: 0 8px;
+}
+
+/* Mobile Menu */
+.mobile-menu-parent > a {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+}
+
+#mobile-menu-overlay > div > .space-y-0 > a {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+}
+
+/* Mobile Submenu */
+.mobile-submenu {
+    background-color: #F6F2E7;
+}
+
+/* Sticky Navigation & Header */
+/* Desktop Sticky Navigation (>=992px) */
+@media (min-width: 992px) {
+    .c-menu-outer.is-sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        transform: translateY(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background-color: #eae6db;
+    }
+
+    .c-menu-outer.is-sticky.is-hidden {
+        transform: translateY(-100%);
+    }
+}
+
+/* Mobile Sticky Header (<992px) */
+@media (max-width: 991px) {
+    #main-header.is-sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        background-color: white;
+        transform: translateY(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #main-header.is-sticky.is-hidden {
+        transform: translateY(-100%);
+    }
+}
+
+/* Article Card Styling */
+.article-card {
+    background: transparent;
+    transition: border-color 0.2s ease;
+}
+
+.article-card:hover {
+    /* Flat design - no lift effect */
+}
+
+.article-thumbnail {
+    aspect-ratio: 3/2;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Grid Time Display */
+.b-grid__time {
+    font-size: 0.875rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+@media (max-width: 610px) {
+    .b-grid__time {
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+}
+
+/* Category Badge */
+.category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.category-badge--primary {
+    background-color: #037A84;
+    color: white;
+}
+
+.category-badge--accent {
+    background-color: #BE1E2D;
+    color: white;
+}
+
+.category-badge--neutral {
+    background-color: #E5E7EB;
+    color: #4B5563;
+}
+
+/* Article Meta */
+.article-meta {
+    font-size: 14px;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Social Share Buttons */
+.social-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.social-share-btn:hover {
+    opacity: 0.9;
+}
+
+.social-share-btn--facebook {
+    background-color: #1877f2;
+    color: white;
+}
+
+.social-share-btn--twitter {
+    background-color: #1da1f2;
+    color: white;
+}
+
+.social-share-btn--linkedin {
+    background-color: #0077B5;
+    color: white;
+}
+
+.social-share-btn--whatsapp {
+    background-color: #25D366;
+    color: white;
+}
+
+.social-share-btn--telegram {
+    background-color: #0088cc;
+    color: white;
+}
+
+.social-share-btn--pinterest {
+    background-color: #E60023;
+    color: white;
+}
+
+.social-share-btn--email {
+    background-color: #6b7280;
+    color: white;
+}
+
+.social-share-btn--copy {
+    background-color: #4B5563;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Section Headers */
+.section-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #037A84;
+}
+
+.section-header--accent {
+    border-bottom-color: #BE1E2D;
+}
+
+@layer utilities {
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@layer base {
+    body {
+        background-color: #F6F2E7;
+        color: #1f2937;
+    }
+
+    .prose p {
+        @apply mb-4;
+    }
+
+    .prose img {
+        @apply rounded my-6;
+    }
+
+    .prose h2 {
+        @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+    }
+
+    .prose h3 {
+        @apply text-xl font-bold mt-6 mb-3 text-gray-900;
+    }
+
+    .prose blockquote {
+        @apply border-l-4 pl-4 italic text-gray-700;
+        border-color: #037A84;
+    }
+
+    .prose ul, .prose ol {
+        @apply mb-4 ml-6;
+    }
+
+    .prose li {
+        @apply mb-2;
+    }
+
+    .prose a {
+        color: #037A84;
+        text-decoration: none;
+    }
+
+    .prose a:hover {
+        text-decoration: underline;
+    }
+
+    /* Trix Editor Image Attachments */
+    .attachment {
+        margin: 2rem 0;
+        width: 100%;
+    }
+
+    .attachment figure,
+    figure.attachment {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .attachment img,
+    figure.attachment img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 4px;
+        border: 1px solid #EAE7DB;
+    }
+
+    .attachment__caption {
+        font-size: 0.875rem;
+        color: #6b7280;
+        text-align: center;
+        padding: 0.5rem 0;
+        font-style: italic;
+    }
+
+    /* Hide metadata (filename/size) on frontend */
+    .prose .attachment__name,
+    .prose .attachment__size,
+    .prose .attachment__metadata-container {
+        display: none;
+    }
+
+    /* Hide toolbar on frontend */
+    .prose .attachment__toolbar {
+        display: none;
+    }
+
+    /* Editor-specific styles (admin panel) */
+    .attachment__caption-editor {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px dashed #EAE7DB;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        color: #6b7280;
+        resize: vertical;
+    }
+}
