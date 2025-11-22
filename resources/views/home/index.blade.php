@@ -14,7 +14,7 @@
                         <article class="overflow-hidden">
                             @php
                                 $heroUrl = route('article.show', [$heroArticle->category, $heroArticle->slug . '-' . $heroArticle->id]);
-                                $heroImageUrl = $heroArticle->featured_image ? \Storage::url($heroArticle->featured_image) : asset('images/placeholder.jpg');
+                                $heroImageUrl = $heroArticle->getImageUrl('large') ?? asset('images/placeholder.jpg');
                             @endphp
                             <a href="{{ $heroUrl }}" class="block">
                                 <img src="{{ $heroImageUrl }}"
@@ -60,7 +60,7 @@
                                 <article class="overflow-hidden">
                                     @php
                                         $articleUrl = route('article.show', [$article->category, $article->slug . '-' . $article->id]);
-                                        $imageUrl = $article->featured_image ? \Storage::url($article->featured_image) : asset('images/placeholder.jpg');
+                                        $imageUrl = $article->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                                     @endphp
                                     <a href="{{ $articleUrl }}" class="block">
                                         <img src="{{ $imageUrl }}"
@@ -88,7 +88,7 @@
                             <article class="flex gap-4 py-4 border-b border-gray-200">
                                 @php
                                     $articleUrl = route('article.show', [$article->category, $article->slug . '-' . $article->id]);
-                                    $imageUrl = $article->featured_image ? \Storage::url($article->featured_image) : asset('images/placeholder.jpg');
+                                    $imageUrl = $article->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                                 @endphp
                                 <a href="{{ $articleUrl }}" class="flex-shrink-0">
                                     <img src="{{ $imageUrl }}"
@@ -128,7 +128,7 @@
                         @php
                             $featuredMostRead = $mostRead->first();
                             $featuredUrl = route('article.show', [$featuredMostRead->category, $featuredMostRead->slug . '-' . $featuredMostRead->id]);
-                            $featuredImageUrl = $featuredMostRead->featured_image ? \Storage::url($featuredMostRead->featured_image) : asset('images/placeholder.jpg');
+                            $featuredImageUrl = $featuredMostRead->getImageUrl('large') ?? asset('images/placeholder.jpg');
                         @endphp
                         <div class="c-media-news__left">
                             <article>
@@ -168,7 +168,7 @@
                                 @foreach($mostRead->skip(1)->take(3) as $article)
                                     @php
                                         $articleUrl = route('article.show', [$article->category, $article->slug . '-' . $article->id]);
-                                        $imageUrl = $article->featured_image ? \Storage::url($article->featured_image) : asset('images/placeholder.jpg');
+                                        $imageUrl = $article->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                                     @endphp
                                     <article class="flex flex-col md:flex-row gap-4">
                                         <!-- Image -->

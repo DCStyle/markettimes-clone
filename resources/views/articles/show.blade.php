@@ -221,7 +221,7 @@
                     <article class="overflow-hidden">
                         @php
                             $heroUrl = route('article.show', [$heroArticle->category, $heroArticle->slug . '-' . $heroArticle->id]);
-                            $heroImageUrl = $heroArticle->featured_image ? \Storage::url($heroArticle->featured_image) : asset('images/placeholder.jpg');
+                            $heroImageUrl = $heroArticle->getImageUrl('large') ?? asset('images/placeholder.jpg');
                         @endphp
                         <a href="{{ $heroUrl }}" class="block">
                             <img src="{{ $heroImageUrl }}"
@@ -267,7 +267,7 @@
                             <article class="overflow-hidden">
                                 @php
                                     $articleUrl = route('article.show', [$featuredArticle->category, $featuredArticle->slug . '-' . $featuredArticle->id]);
-                                    $imageUrl = $featuredArticle->featured_image ? \Storage::url($featuredArticle->featured_image) : asset('images/placeholder.jpg');
+                                    $imageUrl = $featuredArticle->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                                 @endphp
                                 <a href="{{ $articleUrl }}" class="block">
                                     <img src="{{ $imageUrl }}"
@@ -295,7 +295,7 @@
                         <article class="flex gap-4 py-4 border-b border-gray-200">
                             @php
                                 $articleUrl = route('article.show', [$featuredArticle->category, $featuredArticle->slug . '-' . $featuredArticle->id]);
-                                $imageUrl = $featuredArticle->featured_image ? \Storage::url($featuredArticle->featured_image) : asset('images/placeholder.jpg');
+                                $imageUrl = $featuredArticle->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                             @endphp
                             <a href="{{ $articleUrl }}" class="flex-shrink-0">
                                 <img src="{{ $imageUrl }}"

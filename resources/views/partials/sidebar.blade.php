@@ -10,17 +10,20 @@
                 @foreach($mostRead as $index => $article)
                     <div class="flex gap-3 items-start">
                         <!-- Number Badge -->
-                        <div class="flex-shrink-0 w-7 h-7 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        <div class="flex-shrink-0 text-gray-300 rounded-full flex items-center justify-center text-3xl font-black mr-2">
                             {{ $index + 1 }}
                         </div>
 
                         <!-- Article Info -->
                         <div class="flex-1 min-w-0">
-                            @if($article->featured_image)
-                                <img src="{{ Storage::url($article->featured_image) }}"
-                                     alt="{{ $article->title }}"
-                                     class="w-full aspect-[3/2] object-cover rounded mb-2">
-                            @endif
+{{--                            @php--}}
+{{--                                $imageUrl = $article->getImageUrl('thumbnail');--}}
+{{--                            @endphp--}}
+{{--                            @if($imageUrl)--}}
+{{--                                <img src="{{ $imageUrl }}"--}}
+{{--                                     alt="{{ $article->title }}"--}}
+{{--                                     class="w-full aspect-[3/2] object-cover rounded mb-2">--}}
+{{--                            @endif--}}
 
                             <a href="{{ route('article.show', [$article->category, $article->slug . '-' . $article->id]) }}"
                                class="block">
@@ -30,17 +33,13 @@
                             </a>
 
                             <div class="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                            <span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-700">
-                                {{ $article->category->name }}
-                            </span>
+                                <span class="inline-block rounded text-xs font-bold text-teal-600">
+                                    {{ $article->category->name }}
+                                </span>
                                 <span>{{ $article->published_at ? $article->published_at->diffForHumans() : $article->created_at->diffForHumans() }}</span>
                             </div>
                         </div>
                     </div>
-
-                    @if(!$loop->last)
-                        <hr class="border-gray-200">
-                    @endif
                 @endforeach
             </div>
         @else

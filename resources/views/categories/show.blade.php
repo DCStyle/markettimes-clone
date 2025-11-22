@@ -15,7 +15,7 @@
     <h1 class="{{ $headerClass }}">{{ $category->name }}</h1>
 
     @if($category->description)
-        <p class="text-gray-600 mb-6">{{ $category->description }}</p>
+        <p class="text-gray-600 mb-6">{!! nl2br($category->description) !!}</p>
     @endif
 
     <div class="flex items-center justify-between mb-6">
@@ -38,7 +38,7 @@
                             <article class="overflow-hidden">
                                 @php
                                     $heroUrl = route('article.show', [$heroArticle->category, $heroArticle->slug . '-' . $heroArticle->id]);
-                                    $heroImageUrl = $heroArticle->featured_image ? \Storage::url($heroArticle->featured_image) : asset('images/placeholder.jpg');
+                                    $heroImageUrl = $heroArticle->getImageUrl('large') ?? asset('images/placeholder.jpg');
                                 @endphp
                                 <a href="{{ $heroUrl }}" class="block">
                                     <img src="{{ $heroImageUrl }}"
@@ -84,7 +84,7 @@
                                     <article class="overflow-hidden">
                                         @php
                                             $articleUrl = route('article.show', [$article->category, $article->slug . '-' . $article->id]);
-                                            $imageUrl = $article->featured_image ? \Storage::url($article->featured_image) : asset('images/placeholder.jpg');
+                                            $imageUrl = $article->getImageUrl('medium') ?? asset('images/placeholder.jpg');
                                         @endphp
                                         <a href="{{ $articleUrl }}" class="block">
                                             <img src="{{ $imageUrl }}"
