@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+use Spatie\Sitemap\Tags\News;
 
 class GenerateSitemap extends Command
 {
@@ -86,6 +87,39 @@ class GenerateSitemap extends Command
 
         $this->info('Sitemap generated successfully at: ' . public_path('sitemap.xml'));
         $this->info('Total URLs: ' . ($categories->count() + $articles->count() + 2));
+
+        // Generate Google News sitemap
+        $this->info('');
+        $this->info('Generating Google News sitemap...');
+
+        $newsSitemap = Sitemap::create();
+
+        // Get articles published in the last 2 days for Google News
+        $recentArticles = Article::published()
+            ->where('published_at', '>=', now()->subDays(2))
+            ->with('category')
+            ->orderBy('published_at', 'desc')
+            ->get();
+
+        foreach ($recentArticles as $article) {
+            $url = Url::create(route('article.show', [$article->category->slug, $article->slug]))
+                ->setLastModificationDate($article->updated_at)
+                ->addNews(
+                    'Market Times',           // Publication name
+                    'vi',                     // Language
+                    $article->title,          // Article title
+                    $article->published_at    // Publication date
+                );
+
+            $newsSitemap->add($url);
+        }
+
+        $this->info("Added {$recentArticles->count()} recent articles (last 2 days)");
+
+        // Write Google News sitemap to public directory
+        $newsSitemap->writeToFile(public_path('google-news-sitemap.xml'));
+
+        $this->info('Google News sitemap generated successfully at: ' . public_path('google-news-sitemap.xml'));
 
         return Command::SUCCESS;
     }
