@@ -173,17 +173,17 @@ class Article extends Model
 
         // Try to get WebP version if preferred
         if ($preferWebP && isset($paths["{$size}_webp"])) {
-            return \Storage::url($paths["{$size}_webp"]);
+            return \Storage::disk('s3')->url($paths["{$size}_webp"]);
         }
 
         // Fall back to regular version
         if (isset($paths[$size])) {
-            return \Storage::url($paths[$size]);
+            return \Storage::disk('s3')->url($paths[$size]);
         }
 
         // Fall back to original
         if (isset($paths['original'])) {
-            return \Storage::url($paths['original']);
+            return \Storage::disk('s3')->url($paths['original']);
         }
 
         return null;
@@ -211,17 +211,17 @@ class Article extends Model
         return [
             'sources' => [
                 [
-                    'srcset' => $paths['large_webp'] ?? null ? \Storage::url($paths['large_webp']) : null,
+                    'srcset' => $paths['large_webp'] ?? null ? \Storage::disk('s3')->url($paths['large_webp']) : null,
                     'media' => '(min-width: 1024px)',
                     'type' => 'image/webp',
                 ],
                 [
-                    'srcset' => $paths['medium_webp'] ?? null ? \Storage::url($paths['medium_webp']) : null,
+                    'srcset' => $paths['medium_webp'] ?? null ? \Storage::disk('s3')->url($paths['medium_webp']) : null,
                     'media' => '(min-width: 768px)',
                     'type' => 'image/webp',
                 ],
                 [
-                    'srcset' => $paths['thumbnail_webp'] ?? null ? \Storage::url($paths['thumbnail_webp']) : null,
+                    'srcset' => $paths['thumbnail_webp'] ?? null ? \Storage::disk('s3')->url($paths['thumbnail_webp']) : null,
                     'type' => 'image/webp',
                 ],
             ],

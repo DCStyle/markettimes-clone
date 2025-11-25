@@ -124,9 +124,9 @@ class ArticleResource extends Resource
                                 // Return the optimized medium-size image URL
                                 $pathData = json_decode($file, true);
                                 if (is_array($pathData) && isset($pathData['medium'])) {
-                                    return Storage::url($pathData['medium']);
+                                    return Storage::disk('s3')->url($pathData['medium']);
                                 }
-                                return Storage::url($file);
+                                return Storage::disk('s3')->url($file);
                             })
                             ->columnSpanFull(),
                     ])

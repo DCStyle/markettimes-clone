@@ -143,22 +143,22 @@ class ImageService
         return [
             'sources' => [
                 [
-                    'srcset' => isset($paths['large_webp']) ? Storage::url($paths['large_webp']) : null,
+                    'srcset' => isset($paths['large_webp']) ? Storage::disk('s3')->url($paths['large_webp']) : null,
                     'media' => '(min-width: 1024px)',
                     'type' => 'image/webp',
                 ],
                 [
-                    'srcset' => isset($paths['medium_webp']) ? Storage::url($paths['medium_webp']) : null,
+                    'srcset' => isset($paths['medium_webp']) ? Storage::disk('s3')->url($paths['medium_webp']) : null,
                     'media' => '(min-width: 768px)',
                     'type' => 'image/webp',
                 ],
                 [
-                    'srcset' => isset($paths['thumbnail_webp']) ? Storage::url($paths['thumbnail_webp']) : null,
+                    'srcset' => isset($paths['thumbnail_webp']) ? Storage::disk('s3')->url($paths['thumbnail_webp']) : null,
                     'type' => 'image/webp',
                 ],
             ],
             'fallback' => [
-                'src' => isset($paths['thumbnail']) ? Storage::url($paths['thumbnail']) : (isset($paths['original']) ? Storage::url($paths['original']) : ''),
+                'src' => isset($paths['thumbnail']) ? Storage::disk('s3')->url($paths['thumbnail']) : (isset($paths['original']) ? Storage::disk('s3')->url($paths['original']) : ''),
                 'alt' => $alt,
                 'class' => $class,
                 'loading' => 'lazy',
