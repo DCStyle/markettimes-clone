@@ -52,7 +52,7 @@ class ImageService
 
             // Save as JPEG/PNG
             $sizePath = "images/{$path}/{$filename}_{$sizeName}.{$extension}";
-            Storage::disk('public')->put(
+            Storage::disk('s3')->put(
                 $sizePath,
                 $resized->toJpeg($this->quality)
             );
@@ -60,7 +60,7 @@ class ImageService
 
             // Save as WebP
             $webpPath = "images/{$path}/{$filename}_{$sizeName}.webp";
-            Storage::disk('public')->put(
+            Storage::disk('s3')->put(
                 $webpPath,
                 $resized->toWebp($this->quality)
             );
@@ -69,7 +69,7 @@ class ImageService
 
         // Generate WebP version of original
         $originalWebpPath = "images/{$path}/{$filename}.webp";
-        Storage::disk('public')->put(
+        Storage::disk('s3')->put(
             $originalWebpPath,
             $image->toWebp($this->quality)
         );
@@ -124,8 +124,8 @@ class ImageService
     public function deleteImages(array $paths): void
     {
         foreach ($paths as $path) {
-            if ($path && Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
+            if ($path && Storage::disk('s3')->exists($path)) {
+                Storage::disk('s3')->delete($path);
             }
         }
     }
