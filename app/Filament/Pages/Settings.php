@@ -19,6 +19,11 @@ class Settings extends Page implements Forms\Contracts\HasForms
     protected static ?string $title = 'Cài đặt chung';
     protected static ?string $navigationLabel = 'Cài đặt chung';
 
+    public static function canAccess(): bool
+    {
+        return in_array(auth()->user()?->role, ['admin', 'editor']);
+    }
+
     public ?array $data = [];
 
     protected function getSettingsService(): SettingsService

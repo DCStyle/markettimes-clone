@@ -24,6 +24,11 @@ class NavigationItemResource extends Resource
     protected static ?string $modelLabel = 'Navigation Item';
     protected static ?string $pluralModelLabel = 'Navigation Items';
 
+    public static function canAccess(): bool
+    {
+        return in_array(auth()->user()?->role, ['admin', 'editor']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

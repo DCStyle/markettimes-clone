@@ -25,6 +25,11 @@ class CommentResource extends Resource
 
     protected static ?string $navigationBadgeTooltip = 'Pending comments';
 
+    public static function canAccess(): bool
+    {
+        return in_array(auth()->user()?->role, ['admin', 'editor']);
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::where('is_approved', false)->count();

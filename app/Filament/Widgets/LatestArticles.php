@@ -15,10 +15,15 @@ class LatestArticles extends BaseWidget
 
     public function table(Table $table): Table
     {
+        $query = Article::query()->latest('created_at');
+
+        // Authors can only see their own articles
+        if (auth()->user()?->role === 'author') {
+            $query->where('author_id', auth()->id());
+        }
+
         return $table
-            ->query(
-                Article::query()->latest('created_at')->limit(5)
-            )
+            ->query($query->limit(5))
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image')
                     ->square()
@@ -47,7 +52,8 @@ class LatestArticles extends BaseWidget
 
                 Tables\Columns\TextColumn::make('author.name')
                     ->badge()
-                    ->color('info'),
+                    ->color('info')
+                    ->visible(fn () => auth()->user()?->role !== 'author'),
 
                 Tables\Columns\IconColumn::make('is_published')
                     ->boolean()
@@ -62,7 +68,7 @@ class LatestArticles extends BaseWidget
                     ->since()
                     ->label('Created'),
             ])
-            ->heading('Latest Articles')
+            ->heading(auth()->user()?->role === 'author' ? 'My Latest Articles' : 'Latest Articles')
             ->actions([
                 Tables\Actions\Action::make('view')
                     ->url(fn (Article $record): string => route('filament.admin.resources.articles.edit', $record))

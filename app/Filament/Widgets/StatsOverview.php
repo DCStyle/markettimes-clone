@@ -12,6 +12,29 @@ class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
+        $user = auth()->user();
+
+        // Authors see only their own stats
+        if ($user?->role === 'author') {
+            return [
+                Stat::make('My Articles', Article::where('author_id', $user->id)->count())
+                    ->description('Total articles you wrote')
+                    ->descriptionIcon('heroicon-o-newspaper')
+                    ->color('success'),
+
+                Stat::make('Published', Article::where('author_id', $user->id)->where('is_published', true)->count())
+                    ->description('Currently published')
+                    ->descriptionIcon('heroicon-o-check-circle')
+                    ->color('primary'),
+
+                Stat::make('Total Views', Article::where('author_id', $user->id)->sum('view_count'))
+                    ->description('Total view count')
+                    ->descriptionIcon('heroicon-o-eye')
+                    ->color('info'),
+            ];
+        }
+
+        // Admin/Editor see global stats
         return [
             Stat::make('Total Articles', Article::count())
                 ->description('All articles in the system')

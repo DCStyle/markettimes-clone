@@ -15,13 +15,17 @@ class MostViewedArticles extends BaseWidget
 
     public function table(Table $table): Table
     {
+        $query = Article::query()
+            ->where('is_published', true)
+            ->orderBy('view_count', 'desc');
+
+        // Authors can only see their own articles
+        if (auth()->user()?->role === 'author') {
+            $query->where('author_id', auth()->id());
+        }
+
         return $table
-            ->query(
-                Article::query()
-                    ->where('is_published', true)
-                    ->orderBy('view_count', 'desc')
-                    ->limit(10)
-            )
+            ->query($query->limit(10))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -34,7 +38,8 @@ class MostViewedArticles extends BaseWidget
 
                 Tables\Columns\TextColumn::make('author.name')
                     ->badge()
-                    ->color('info'),
+                    ->color('info')
+                    ->visible(fn () => auth()->user()?->role !== 'author'),
 
                 Tables\Columns\TextColumn::make('view_count')
                     ->numeric()
@@ -54,7 +59,7 @@ class MostViewedArticles extends BaseWidget
                     ->badge()
                     ->color('primary'),
             ])
-            ->heading('Most Viewed Articles')
+            ->heading(auth()->user()?->role === 'author' ? 'My Most Viewed Articles' : 'Most Viewed Articles')
             ->actions([
                 Tables\Actions\Action::make('view')
                     ->url(fn (Article $record): string => route('filament.admin.resources.articles.edit', $record))

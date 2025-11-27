@@ -55,7 +55,9 @@ class ArticleResource extends Resource
                             ->required()
                             ->default(auth()->id())
                             ->searchable()
-                            ->preload(),
+                            ->preload()
+                            ->hidden(fn () => auth()->user()?->role === 'author')
+                            ->dehydrated(),
 
                         Forms\Components\Select::make('tags')
                             ->relationship('tags', 'name')
@@ -289,10 +291,17 @@ class ArticleResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        $query = parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+
+        // Authors can only see their own articles
+        if (auth()->user()?->role === 'author') {
+            $query->where('author_id', auth()->id());
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

@@ -23,6 +23,11 @@ class TagResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function canAccess(): bool
+    {
+        return in_array(auth()->user()?->role, ['admin', 'editor']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

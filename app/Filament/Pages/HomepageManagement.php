@@ -22,6 +22,11 @@ class HomepageManagement extends Page implements Forms\Contracts\HasForms
     protected static ?string $title = 'Quản lý Trang chủ';
     protected static ?string $navigationLabel = 'Trang chủ';
 
+    public static function canAccess(): bool
+    {
+        return in_array(auth()->user()?->role, ['admin', 'editor']);
+    }
+
     public ?array $data = [];
     public bool $showPreview = false;
     public ?string $previewUrl = null;
