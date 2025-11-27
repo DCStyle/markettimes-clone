@@ -18,6 +18,8 @@
 /public/storage
 /public/sitemap.xml
 /public/google-news-sitemap.xml
+/public/latest-news-sitemap.xml
+/public/sitemaps/
 /storage/*.key
 /storage/pail
 /vendor
