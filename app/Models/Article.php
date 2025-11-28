@@ -213,7 +213,7 @@ class Article extends Model
         $paths = $this->featured_image_paths;
 
         if (!$paths) {
-            return $this->getFirstImageFromContent();
+            return $this->getFirstImageFromContent($size);
         }
 
         // Try to get WebP version if preferred
