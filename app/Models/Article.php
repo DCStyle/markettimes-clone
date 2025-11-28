@@ -178,6 +178,25 @@ class Article extends Model
     }
 
     /**
+     * Extract the first image URL from article content
+     *
+     * @return string|null
+     */
+    protected function getFirstImageFromContent(): ?string
+    {
+        if (empty($this->content)) {
+            return null;
+        }
+
+        // Use regex to find the first <img> tag's src attribute
+        if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/', $this->content, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
+    }
+
+    /**
      * Get the appropriate image URL for a given size
      *
      * @param string $size thumbnail|medium|large|original
@@ -189,7 +208,7 @@ class Article extends Model
         $paths = $this->featured_image_paths;
 
         if (!$paths) {
-            return null;
+            return $this->getFirstImageFromContent();
         }
 
         // Try to get WebP version if preferred
@@ -207,7 +226,8 @@ class Article extends Model
             return \Storage::disk('s3')->url($paths['original']);
         }
 
-        return null;
+        // Fall back to first image in content
+        return $this->getFirstImageFromContent();
     }
 
     /**
