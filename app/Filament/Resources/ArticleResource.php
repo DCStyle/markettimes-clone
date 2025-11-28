@@ -393,10 +393,14 @@ class ArticleResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery()
-            ->withoutGlobalScopes([
+        $query = parent::getEloquentQuery();
+
+        // Only admins/editors can see trashed articles (they have TrashedFilter)
+        if (in_array(auth()->user()?->role, ['admin', 'editor'])) {
+            $query->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+        }
 
         // Authors can only see their own articles
         if (auth()->user()?->role === 'author') {
