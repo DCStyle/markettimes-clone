@@ -46,13 +46,18 @@ class AppServiceProvider extends ServiceProvider
 
             // Check if we're on a category page
             if (request()->route() && request()->route()->getName() === 'category.show') {
-                $currentCategory = request()->route('category');
+                $category = request()->route('category');
+                // Only set if it's a Category model (not a raw string from failed route binding)
+                if ($category instanceof \App\Models\Category) {
+                    $currentCategory = $category;
+                }
             }
 
             // Check if we're on an article page
             if (request()->route() && request()->route()->getName() === 'article.show') {
                 $article = request()->route('article');
-                if ($article && $article->category) {
+                // Only set if it's an Article model with a valid category
+                if ($article instanceof \App\Models\Article && $article->category) {
                     $currentCategory = $article->category;
                 }
             }
