@@ -3,7 +3,7 @@
     <div class="hidden md:block bg-black bg-opacity-5 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 py-2">
             <div class="flex items-center justify-between text-sm text-gray-600">
-                <span>Tạp chí điện tử Nhịp sống thị trường</span>
+                <span>Tạp chí đầu tư X-Investor</span>
                 <span>{{ now()->format('d/m/Y') }}</span>
             </div>
         </div>
